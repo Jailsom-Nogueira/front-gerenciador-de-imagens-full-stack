@@ -13,6 +13,7 @@ Projeto full stack de um gerenciador de imagens - repositório front-end
 - Material-ui (Componentes UI);
 - Axios (comunicação com a API)
 - Styled Components (estilização(css))
+- Dayjs (Manipulação de datas)
 
 ### Conceitos ❕
 - Componentização;
