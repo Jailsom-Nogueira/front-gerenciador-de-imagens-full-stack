@@ -1,3 +1,6 @@
+# (EM BREVE)front-gerenciador-de-imagens-full-stack
+Projeto full stack de um gerenciador de imagens - repositório front end
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,3 +69,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
