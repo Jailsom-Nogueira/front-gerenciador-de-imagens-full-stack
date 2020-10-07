@@ -11,6 +11,12 @@ Projeto full stack de um gerenciador de imagens - repositório front-end
 
 ### Bibliotecas: 📚
 - Material-ui (Componentes UI);
+   - date-io/dayjs
+   - material-ui/core
+   - material-ui/icons
+   - material-ui/lab
+   - material-ui/pickers
+   - react-material-ui-form-validator
 - Axios (comunicação com a API)
 - Styled Components (estilização(css))
 - Dayjs (Manipulação de datas)
