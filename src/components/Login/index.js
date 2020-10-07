@@ -19,6 +19,7 @@ import {
   Avatar,
   Typography,
 } from '@material-ui/core';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -35,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
   textField: {
     marginTop: theme.spacing(1),
   },
@@ -53,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   typographyStyle: {
     color: '#fff',
     marginBottom: theme.spacing(3),
+  },
+  textValidator: {
+    width: '100%',
   },
 }));
 
@@ -100,8 +101,7 @@ export default function Login() {
           'userId',
           JSON.stringify(response.data.userData.id),
         );
-        alert('Logado!');
-        // history.push('/CreateImage');
+        history.push('/CreateImage');
       })
       .catch((err) => {
         alert('Não foi possível fazer seu login, erro: ' + err.message);
@@ -122,8 +122,15 @@ export default function Login() {
       </Typography>
 
       <FormPageCard>
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField
+        <ValidatorForm
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleLoginButton}
+          onError={(errors) => console.log(errors)}
+        >
+          <TextValidator
+            className={classes.textValidator}
             id="email"
             required
             label="E-mail"
@@ -131,9 +138,10 @@ export default function Login() {
             type="email"
             value={form.email}
             onChange={handleChange('email')}
-            placeholder="email@email.com"
-            autoComplete="email"
+            onError={(errors) => console.log(errors)}
             autoFocus
+            validators={['required', 'isEmail']}
+            errorMessages={['campo requerido', 'email inválido']}
           />
 
           <FormControl
@@ -169,7 +177,7 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={clsx(classes.buttonStyle)}
-              onClick={handleLoginButton}
+              type="submit"
             >
               ENTRAR
             </Button>
@@ -181,7 +189,7 @@ export default function Login() {
               CADASTRAR
             </Button>
           </ButtonContainer>
-        </form>
+        </ValidatorForm>
       </FormPageCard>
     </FormPageContainer>
   );

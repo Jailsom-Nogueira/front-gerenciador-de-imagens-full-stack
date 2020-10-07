@@ -3,6 +3,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import Login from '../Login';
 import SignUp from '../SignUp';
+import CreateImage from '../CreateImage';
 
 export default function Router() {
   return (
@@ -11,9 +12,9 @@ export default function Router() {
         <Route exact path="/">
           <Login />
         </Route>
-        {/* <Route exact path="/CreateImage">
+        <Route exact path="/CreateImage">
           <CreateImage />
-        </Route> */}
+        </Route>
         <Route exact path="/SignUp">
           <SignUp />
         </Route>

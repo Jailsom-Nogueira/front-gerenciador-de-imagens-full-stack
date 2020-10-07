@@ -3,6 +3,9 @@ import Router from './components/Router';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import dayjs from '@date-io/dayjs';
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -16,9 +19,11 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Router />
-    </ThemeProvider>
+    <MuiPickersUtilsProvider utils={dayjs}>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </MuiPickersUtilsProvider>
   );
 }
 
