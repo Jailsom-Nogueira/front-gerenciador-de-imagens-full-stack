@@ -5,7 +5,7 @@ Projeto full stack de um gerenciador de imagens - repositório front-end
 
 ### Framework, linguagens e afins: 🛠
 - React;
-- Router, useState, useHistory, useEffect, useContext;
+- Router, useState, useHistory, useEffect, useContext, useParams;
 - Javascript;
 - Nodejs;
 
