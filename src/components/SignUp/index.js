@@ -114,8 +114,8 @@ export default function SignUp() {
           'userId',
           JSON.stringify(response.data.userData.id),
         );
-        alert('Criado!');
-        // history.push('/');
+
+        history.push('/CreateImage');
       })
       .catch((error) => {
         alert(error.response.data.message + ', cadastro não realizado');
@@ -150,6 +150,7 @@ export default function SignUp() {
             value={form.email}
             onChange={handleChange('email')}
             placeholder="email@email.com"
+            autoFocus
           />
 
           <TextField
@@ -204,7 +205,7 @@ export default function SignUp() {
             className={clsx(classes.margin, classes.textField)}
             variant="outlined"
           >
-            <InputLabel htmlFor="confirmPassword">Confirme a senha</InputLabel>
+            <InputLabel htmlFor="confirmPassword">Senha</InputLabel>
             <OutlinedInput
               id="confirmPassword"
               type={form.showConfirmPassword ? 'text' : 'password'}
