@@ -6,6 +6,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import dayjs from '@date-io/dayjs';
 
+import { GlobalStorage } from './components/GlobalContext/';
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -21,7 +23,9 @@ function App() {
   return (
     <MuiPickersUtilsProvider utils={dayjs}>
       <ThemeProvider theme={theme}>
-        <Router />
+        <GlobalStorage>
+          <Router />
+        </GlobalStorage>
       </ThemeProvider>
     </MuiPickersUtilsProvider>
   );

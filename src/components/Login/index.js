@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../../constants/axios';
 
-import { FormPageContainer, FormPageCard, ButtonContainer } from './styles';
+import { FormPageContainer, FormPageCard } from './styles';
 
 import clsx from 'clsx';
 import {
@@ -17,6 +17,7 @@ import {
   FormControl,
   Avatar,
   Typography,
+  CardActions,
 } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
@@ -76,7 +77,11 @@ export default function Login() {
 
   const handleLoginButton = (event) => {
     event.preventDefault();
-    handleLogin();
+    if (form.password.length < 6) {
+      alert('A senha deve conter no mínimo 6 caracteres');
+    } else {
+      handleLogin();
+    }
   };
 
   const handleSignUpButton = (event) => {
@@ -171,7 +176,8 @@ export default function Login() {
               labelWidth={70}
             />
           </FormControl>
-          <ButtonContainer>
+
+          <CardActions>
             <Button
               variant="contained"
               color="primary"
@@ -187,7 +193,7 @@ export default function Login() {
             >
               CADASTRAR
             </Button>
-          </ButtonContainer>
+          </CardActions>
         </ValidatorForm>
       </FormPageCard>
     </FormPageContainer>

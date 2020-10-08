@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../../constants/axios';
 
-import { FormPageContainer, FormPageCard, ButtonContainer } from './styles';
+import { FormPageContainer, FormPageCard } from './styles';
 
 import clsx from 'clsx';
 import {
@@ -18,6 +18,7 @@ import {
   FormControl,
   Avatar,
   Typography,
+  CardActions,
 } from '@material-ui/core';
 
 import Visibility from '@material-ui/icons/Visibility';
@@ -84,14 +85,13 @@ export default function SignUp() {
   };
 
   const handleSignUpButton = (event) => {
-    const password1 = form.password;
-    const password2 = form.confirmPassword;
-
     event.preventDefault();
-    if (password1 === password2) {
-      registerUser();
-    } else {
+    if (form.password.length < 6) {
+      alert('A senha deve conter no mínimo 6 caracteres');
+    } else if (form.password !== form.confirmPassword) {
       alert('Verifique as senhas');
+    } else {
+      registerUser();
     }
   };
 
@@ -231,7 +231,7 @@ export default function SignUp() {
             />
           </FormControl>
 
-          <ButtonContainer>
+          <CardActions>
             <Button
               variant="contained"
               color="primary"
@@ -247,7 +247,7 @@ export default function SignUp() {
             >
               VOLTAR
             </Button>
-          </ButtonContainer>
+          </CardActions>
         </form>
       </FormPageCard>
     </FormPageContainer>

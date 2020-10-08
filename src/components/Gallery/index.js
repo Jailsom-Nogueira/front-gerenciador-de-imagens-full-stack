@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { GlobalContext } from '../GlobalContext';
 
 import axios from 'axios';
 import { baseUrl } from '../../constants/axios';
 
 import { GalleryContainer, GalleryCard } from './styles';
+
+import ImageDetails from '../ImageDetails';
+import Loader from '../Loading';
 
 import {
   makeStyles,
@@ -12,6 +16,7 @@ import {
   Typography,
   Button,
   CardActions,
+  Modal,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,15 +93,23 @@ const useStyles = makeStyles((theme) => ({
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 export default function CreateImage() {
+  const allContext = useContext(GlobalContext);
+  const [open, setOpen] = useState(false);
+  const [myGallery, setGallery] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const classes = useStyles();
   const history = useHistory();
 
   const token = window.localStorage.getItem('token');
-
-  const [myGallery, setGallery] = useState([]);
 
   useEffect(() => {
     if (token === null) {
@@ -118,17 +131,19 @@ export default function CreateImage() {
         .get(`${baseUrl}image/getImage/`, axiosConfig)
         .then((response) => {
           setGallery(response.data);
+          setLoading(false);
         })
         .catch((err) => {
-          alert(err.message);
+          setLoading(false);
+          alert(
+            'Erro ao estabelecer conecção com o banco de dados',
+            err.message,
+          );
+          history.goBack();
         });
     } else {
       history.push('/');
     }
-  };
-
-  const handleDetailsButton = (id) => {
-    history.push(`/ImageDetails${id}`);
   };
 
   const handleGoBackButton = (event) => {
@@ -136,52 +151,75 @@ export default function CreateImage() {
     history.goBack();
   };
 
+  const handleOpen = (imageId) => {
+    allContext.setImageDetailsId(imageId);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const modalBody = <ImageDetails />;
+
+  const loadingState = loading ? (
+    <Loader />
+  ) : (
+    <GalleryCard>
+      <div className={classes.root}>
+        {myGallery.map((image) => (
+          <ButtonBase
+            focusRipple
+            key={image.id}
+            className={classes.image}
+            focusVisibleClassName={classes.focusVisible}
+            style={{
+              width: '33%',
+            }}
+            onClick={() => handleOpen(image.id)}
+          >
+            <span
+              className={classes.imageSrc}
+              style={{
+                backgroundImage: `url(${image.file})`,
+              }}
+            />
+            <span className={classes.imageBackdrop} />
+            <span className={classes.imageButton}>
+              <Typography
+                component="span"
+                variant="subtitle1"
+                color="inherit"
+                className={classes.imageTitle}
+              >
+                {image.subtitle}
+                <span className={classes.imageMarked} />
+              </Typography>
+            </span>
+          </ButtonBase>
+        ))}
+      </div>
+
+      <CardActions>
+        <Button variant="outlined" color="primary" onClick={handleGoBackButton}>
+          VOLTAR
+        </Button>
+      </CardActions>
+    </GalleryCard>
+  );
+
   return (
     <GalleryContainer>
-      <GalleryCard>
-        <div className={classes.root}>
-          {myGallery.map((image) => (
-            <ButtonBase
-              focusRipple
-              key={image.id}
-              className={classes.image}
-              focusVisibleClassName={classes.focusVisible}
-              style={{
-                width: '33%',
-              }}
-              onClick={() => handleDetailsButton(image.id)}
-            >
-              <span
-                className={classes.imageSrc}
-                style={{
-                  backgroundImage: `url(${image.file})`,
-                }}
-              />
-              <span className={classes.imageBackdrop} />
-              <span className={classes.imageButton}>
-                <Typography
-                  component="span"
-                  variant="subtitle1"
-                  color="inherit"
-                  className={classes.imageTitle}
-                >
-                  {image.subtitle}
-                  <span className={classes.imageMarked} />
-                </Typography>
-              </span>
-            </ButtonBase>
-          ))}
-        </div>
-        <CardActions>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={handleGoBackButton}
-          >
-            VOLTAR
-          </Button>
-        </CardActions>
-      </GalleryCard>
+      {loadingState}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="detalhes-da-imagem"
+        aria-describedby="quando-selecionado-abre-detalhes-da-imagem"
+        className={classes.modal}
+      >
+        {modalBody}
+      </Modal>
     </GalleryContainer>
   );
 }
