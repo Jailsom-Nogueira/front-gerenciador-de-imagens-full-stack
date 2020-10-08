@@ -17,6 +17,3 @@ export const FormPageCard = styled.div`
   box-shadow: 0 4px 16px 4px rgba(0, 0, 0, 0.3);
   background-color: #fff;
 `;
-export const ButtonContainer = styled.div`
-  display: flex;
-`;

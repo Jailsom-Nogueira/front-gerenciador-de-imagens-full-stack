@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { GlobalContext } from '../GlobalContext';
 
 import dayjs from 'dayjs';
 
@@ -10,10 +11,8 @@ import {
   makeStyles,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
-  Button,
   Typography,
   CardHeader,
 } from '@material-ui/core';
@@ -25,11 +24,12 @@ const useStyles = makeStyles({
 });
 
 export default function ImageDetails() {
+  const allContext = useContext(GlobalContext);
+
   const [myImageDetails, setMyImageDetails] = useState([]);
 
   const classes = useStyles();
   const history = useHistory();
-  const params = useParams();
 
   const token = window.localStorage.getItem('token');
 
@@ -49,7 +49,10 @@ export default function ImageDetails() {
         },
       };
       axios
-        .get(`${baseUrl}image/getImage?id=${params.id}`, axiosConfig)
+        .get(
+          `${baseUrl}image/getImage?id=${allContext.imageDetailsId}`,
+          axiosConfig,
+        )
         .then((response) => {
           setMyImageDetails(response.data);
         })
@@ -59,11 +62,6 @@ export default function ImageDetails() {
     } else {
       history.push('/');
     }
-  };
-
-  const handleGoBackButton = (event) => {
-    event.preventDefault();
-    history.goBack();
   };
 
   const gotImage = myImageDetails.length && (
@@ -92,11 +90,6 @@ export default function ImageDetails() {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary" onClick={handleGoBackButton}>
-          VOLTAR
-        </Button>
-      </CardActions>
     </Card>
   );
 
