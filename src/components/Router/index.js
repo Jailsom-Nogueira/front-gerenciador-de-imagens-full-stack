@@ -4,6 +4,8 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Login from '../Login';
 import SignUp from '../SignUp';
 import CreateImage from '../CreateImage';
+import Gallery from '../Gallery';
+import ImageDetails from '../ImageDetails';
 
 export default function Router() {
   return (
@@ -18,15 +20,12 @@ export default function Router() {
         <Route exact path="/SignUp">
           <SignUp />
         </Route>
-        {/* <Route exact path='/SignUp/SignUpAdress'>
-          <SignUpAdress />
+        <Route exact path="/Gallery">
+          <Gallery />
         </Route>
-        <Route exact path='/loggedIn/FeedPage'>
-          <FeedPage />
+        <Route exact path="/ImageDetails:id">
+          <ImageDetails />
         </Route>
-        <Route exact path='/loggedIn/SearchPage'>
-          <SearchPage />
-        </Route>  */}
         <Route path="/">
           <h3>Page under construction (404)</h3>
         </Route>

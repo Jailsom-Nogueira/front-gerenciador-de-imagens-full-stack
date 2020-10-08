@@ -113,6 +113,11 @@ export default function CreateImage() {
       });
   };
 
+  const handleToGalleryButton = (event) => {
+    event.preventDefault();
+    history.push('/Gallery');
+  };
+
   return (
     <FormPageContainer>
       <Avatar className={classes.avatarStyle}>
@@ -207,6 +212,13 @@ export default function CreateImage() {
               onClick={handleCreateButton}
             >
               ENVIAR
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleToGalleryButton}
+            >
+              MINHAS IMAGENS
             </Button>
           </ButtonContainer>
         </FormControl>
