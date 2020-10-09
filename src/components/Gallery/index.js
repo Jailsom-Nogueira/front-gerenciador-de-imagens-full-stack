@@ -118,31 +118,50 @@ export default function CreateImage() {
     getImages();
   }, [history, token]);
 
-  const getImages = () => {
-    if (token !== null) {
-      const axiosConfig = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      };
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  };
 
-      axios
-        .get(`${baseUrl}image/getImage/`, axiosConfig)
-        .then((response) => {
-          setGallery(response.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          alert(
-            'Erro ao estabelecer conecção com o banco de dados',
-            err.message,
-          );
-          history.goBack();
-        });
+  const getImages = async () => {
+    if (token !== null) {
+      try {
+        console.log(`${baseUrl}image/getImage/`, axiosConfig);
+        const response = await axios.get(
+          `${baseUrl}image/getImage/`,
+          axiosConfig,
+        );
+        setGallery(response.data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        alert('Erro ao estabelecer conexão com o banco de dados', err.message);
+        history.goBack();
+      }
     } else {
       history.push('/');
+    }
+  };
+
+  const handleDelete = () => {
+    let r = window.confirm('Tem certeza de que deseja apagar a imagem?');
+
+    if (r === true) {
+      axios
+        .delete(
+          `${baseUrl}image/deleteImage?id=${allContext.imageDetailsId}`,
+          axiosConfig,
+        )
+        .then(() => {
+          allContext.setImageDetailsId('');
+          setOpen(false);
+          window.location.reload(true);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -160,7 +179,7 @@ export default function CreateImage() {
     setOpen(false);
   };
 
-  const modalBody = <ImageDetails />;
+  const modalBody = <ImageDetails handleDelete={handleDelete} />;
 
   const loadingState = loading ? (
     <Loader />

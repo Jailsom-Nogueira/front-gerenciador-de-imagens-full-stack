@@ -46,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateImage() {
+  const [today, setToday] = useState(new Date());
+
   const classes = useStyles();
 
   const history = useHistory();
@@ -106,7 +108,10 @@ export default function CreateImage() {
     axios
       .post(`${baseUrl}image/createImage`, body, axiosConfig)
       .then((response) => {
-        alert(response.data);
+        alert(response.data.message);
+        setTags('');
+        setForm({ subtitle: '', author: '', file: '', collection: '' });
+        setSelectedDate(new Date());
       })
       .catch((err) => {
         alert(err.message);
@@ -193,6 +198,10 @@ export default function CreateImage() {
             id="date-picker"
             required
             disableToolbar
+            maxDate={new Date()}
+            maxDateMessage="Data não deve passar de hoje"
+            minDate="Date(1000-01-01)"
+            minDateMessage="Data não deve ser anterior a 01/01/1000DC"
             variant="outlined"
             format="DD/MM/YYYY"
             margin="normal"

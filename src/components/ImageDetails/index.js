@@ -15,7 +15,13 @@ import {
   CardMedia,
   Typography,
   CardHeader,
+  Grid,
 } from '@material-ui/core';
+
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ImageDetails() {
+export default function ImageDetails(props) {
   const allContext = useContext(GlobalContext);
 
   const [myImageDetails, setMyImageDetails] = useState([]);
@@ -40,25 +46,24 @@ export default function ImageDetails() {
     getImage();
   }, [history, token]);
 
-  const getImage = () => {
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  };
+
+  const getImage = async () => {
     if (token !== null) {
-      const axiosConfig = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      };
-      axios
-        .get(
+      try {
+        const response = await axios.get(
           `${baseUrl}image/getImage?id=${allContext.imageDetailsId}`,
           axiosConfig,
-        )
-        .then((response) => {
-          setMyImageDetails(response.data);
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
+        );
+        setMyImageDetails(response.data);
+      } catch (err) {
+        alert(err.message);
+      }
     } else {
       history.push('/');
     }
@@ -68,6 +73,11 @@ export default function ImageDetails() {
     <Card className={classes.root}>
       <CardActionArea>
         <CardHeader
+          action={
+            <Grid item xs={8}>
+              <DeleteForeverOutlinedIcon onClick={props.handleDelete} />
+            </Grid>
+          }
           title={myImageDetails[0].author}
           subheader={dayjs(myImageDetails[0].date).format('dd-MM-YYYY')}
         />
