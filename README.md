@@ -3,6 +3,8 @@
 # Fullstack - Gerenciador de imagens. (Front-end) 📺
 Projeto full stack de um gerenciador de imagens - repositório front-end
 
+### 🚨 A API não está online, logo o front não funciona ainda! 🚨
+
 ## [SURGE](http://graceful-harbor.surge.sh/)
 
 ### Framework, linguagens e afins: 🛠
