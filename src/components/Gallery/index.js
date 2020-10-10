@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { GlobalContext } from '../GlobalContext';
 
 import axios from 'axios';
-import { baseUrl } from '../../constants/axios';
+import { baseUrl, axiosConfig } from '../../constants/axios';
 
 import { GalleryContainer, GalleryCard } from './styles';
 
@@ -118,19 +118,11 @@ export default function CreateImage() {
     getImages();
   }, [history, token]);
 
-  const axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token,
-    },
-  };
-
   const getImages = async () => {
     if (token !== null) {
       try {
-        console.log(`${baseUrl}image/getImage/`, axiosConfig);
         const response = await axios.get(
-          `${baseUrl}image/getImage/`,
+          `${baseUrl}image/getImage`,
           axiosConfig,
         );
         setGallery(response.data);
