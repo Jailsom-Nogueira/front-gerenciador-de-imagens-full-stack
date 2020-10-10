@@ -5,7 +5,7 @@ import { GlobalContext } from '../GlobalContext';
 import dayjs from 'dayjs';
 
 import axios from 'axios';
-import { baseUrl } from '../../constants/axios';
+import { baseUrl, axiosConfig } from '../../constants/axios';
 
 import {
   makeStyles,
@@ -19,9 +19,6 @@ import {
 } from '@material-ui/core';
 
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
   root: {
@@ -45,13 +42,6 @@ export default function ImageDetails(props) {
     }
     getImage();
   }, [history, token]);
-
-  const axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token,
-    },
-  };
 
   const getImage = async () => {
     if (token !== null) {
