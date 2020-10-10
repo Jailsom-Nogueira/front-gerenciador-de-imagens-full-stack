@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 import { baseUrl } from '../../constants/axios';
 
 import { FormPageContainer, FormPageCard } from './styles';
+
+import Loader from '../Loading';
 
 import clsx from 'clsx';
 import {
@@ -61,7 +63,9 @@ export default function SignUp() {
   const classes = useStyles();
   const history = useHistory();
 
-  const [form, setForm] = React.useState({
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
     email: '',
     name: '',
     nickname: '',
@@ -96,13 +100,15 @@ export default function SignUp() {
   };
 
   const registerUser = () => {
+    setLoading(true);
+
     const body = {
       email: `${form.email}`,
       name: `${form.name}`,
       nickname: `${form.nickname}`,
       password: `${form.password}`,
     };
-    console.log(`${baseUrl}user/signup`, body);
+
     axios
       .post(`${baseUrl}user/signup`, body)
       .then((response) => {
@@ -114,10 +120,11 @@ export default function SignUp() {
           'userId',
           JSON.stringify(response.data.userData.id),
         );
-
+        setLoading(false);
         history.push('/CreateImage');
       })
       .catch((error) => {
+        setLoading(false);
         alert(error.response.data.message + ', cadastro não realizado');
       });
   };
@@ -127,8 +134,10 @@ export default function SignUp() {
     history.push('/');
   };
 
-  return (
-    <FormPageContainer>
+  const loadingState = loading ? (
+    <Loader />
+  ) : (
+    <>
       <Avatar className={classes.avatarStyle}>
         <AssignmentIcon />
       </Avatar>
@@ -249,7 +258,9 @@ export default function SignUp() {
             </Button>
           </CardActions>
         </form>
-      </FormPageCard>
-    </FormPageContainer>
+      </FormPageCard>{' '}
+    </>
   );
+
+  return <FormPageContainer>{loadingState};</FormPageContainer>;
 }

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 import { baseUrl } from '../../constants/axios';
 
 import { FormPageContainer, FormPageCard } from './styles';
+
+import Loader from '../Loading';
 
 import clsx from 'clsx';
 import {
@@ -60,7 +62,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const history = useHistory();
-  const [form, setForm] = React.useState({
+
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
     email: '',
     password: '',
   });
@@ -90,10 +95,13 @@ export default function Login() {
   };
 
   const handleLogin = () => {
+    setLoading(true);
+
     const body = {
       email: `${form.email}`,
       password: `${form.password}`,
     };
+
     axios
       .post(`${baseUrl}user/login`, body)
       .then((response) => {
@@ -105,15 +113,19 @@ export default function Login() {
           'userId',
           JSON.stringify(response.data.userData.id),
         );
+        setLoading(false);
         history.push('/CreateImage');
       })
       .catch((err) => {
+        setLoading(false);
         alert('Não foi possível fazer seu login, erro: ' + err.message);
       });
   };
 
-  return (
-    <FormPageContainer>
+  const loadingState = loading ? (
+    <Loader />
+  ) : (
+    <>
       <Avatar className={classes.avatarStyle}>
         <LockOpenIcon />
       </Avatar>
@@ -196,6 +208,8 @@ export default function Login() {
           </CardActions>
         </ValidatorForm>
       </FormPageCard>
-    </FormPageContainer>
+    </>
   );
+
+  return <FormPageContainer> </FormPageContainer>;
 }

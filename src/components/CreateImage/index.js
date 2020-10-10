@@ -6,6 +6,8 @@ import * as dayjs from 'dayjs';
 import axios from 'axios';
 import { baseUrl, axiosConfig } from '../../constants/axios';
 
+import Loader from '../Loading';
+
 import { FormPageContainer, FormPageCard, ButtonContainer } from './styles';
 
 import clsx from 'clsx';
@@ -47,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateImage() {
   const [today, setToday] = useState(new Date());
+  const [loading, setLoading] = useState(false);
 
   const classes = useStyles();
-
   const history = useHistory();
 
   const token = window.localStorage.getItem('token');
@@ -90,6 +92,8 @@ export default function CreateImage() {
   };
 
   const createImage = () => {
+    setLoading(true);
+
     const body = {
       subtitle: `${form.subtitle}`,
       author: `${form.author}`,
@@ -102,12 +106,14 @@ export default function CreateImage() {
     axios
       .post(`${baseUrl}image/createImage`, body, axiosConfig)
       .then((response) => {
+        setLoading(false);
         alert(response.data.message);
         setTags('');
         setForm({ subtitle: '', author: '', file: '', collection: '' });
         setSelectedDate(new Date());
       })
       .catch((err) => {
+        setLoading(false);
         alert(err.message);
       });
   };
@@ -117,12 +123,13 @@ export default function CreateImage() {
     history.push('/Gallery');
   };
 
-  return (
-    <FormPageContainer>
+  const loadingState = loading ? (
+    <Loader />
+  ) : (
+    <>
       <Avatar className={classes.avatarStyle}>
         <CropOriginalIcon />
       </Avatar>
-
       <Typography
         className={classes.typographyStyle}
         component="h3"
@@ -130,7 +137,6 @@ export default function CreateImage() {
       >
         CRIAR IMAGEM
       </Typography>
-
       <FormPageCard>
         <FormControl
           component="fieldset"
@@ -226,6 +232,8 @@ export default function CreateImage() {
           </ButtonContainer>
         </FormControl>
       </FormPageCard>
-    </FormPageContainer>
+    </>
   );
+
+  return <FormPageContainer>{loadingState};</FormPageContainer>;
 }

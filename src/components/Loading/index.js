@@ -17,7 +17,7 @@ const Rotate = styled.div`
 `;
 
 const Image = styled.img`
-  width: 10vw;
+  width: 5vw;
 `;
 
 export default function Loader() {
