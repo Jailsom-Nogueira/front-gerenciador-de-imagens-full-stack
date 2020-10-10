@@ -17,7 +17,10 @@ import {
   Button,
   CardActions,
   Modal,
+  Avatar,
 } from '@material-ui/core';
+
+import PermMediaIcon from '@material-ui/icons/PermMedia';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,6 +101,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  avatarStyle: {
+    color: '#fff',
+    backgroundColor: '#ff6d00',
+    marginBottom: theme.spacing(1),
+  },
+  typographyStyle: {
+    color: '#fff',
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 export default function CreateImage() {
@@ -176,47 +188,64 @@ export default function CreateImage() {
   const loadingState = loading ? (
     <Loader />
   ) : (
-    <GalleryCard>
-      <div className={classes.root}>
-        {myGallery.map((image) => (
-          <ButtonBase
-            focusRipple
-            key={image.id}
-            className={classes.image}
-            focusVisibleClassName={classes.focusVisible}
-            style={{
-              width: '33%',
-            }}
-            onClick={() => handleOpen(image.id)}
-          >
-            <span
-              className={classes.imageSrc}
-              style={{
-                backgroundImage: `url(${image.file})`,
-              }}
-            />
-            <span className={classes.imageBackdrop} />
-            <span className={classes.imageButton}>
-              <Typography
-                component="span"
-                variant="subtitle1"
-                color="inherit"
-                className={classes.imageTitle}
-              >
-                {image.subtitle}
-                <span className={classes.imageMarked} />
-              </Typography>
-            </span>
-          </ButtonBase>
-        ))}
-      </div>
+    <>
+      <Avatar className={classes.avatarStyle}>
+        <PermMediaIcon />
+      </Avatar>
+      <Typography
+        className={classes.typographyStyle}
+        component="h3"
+        variant="h5"
+      >
+        MINHA GALERIA
+      </Typography>
 
-      <CardActions>
-        <Button variant="outlined" color="primary" onClick={handleGoBackButton}>
-          VOLTAR
-        </Button>
-      </CardActions>
-    </GalleryCard>
+      <GalleryCard>
+        <div className={classes.root}>
+          {myGallery.map((image) => (
+            <ButtonBase
+              focusRipple
+              key={image.id}
+              className={classes.image}
+              focusVisibleClassName={classes.focusVisible}
+              style={{
+                width: '33%',
+              }}
+              onClick={() => handleOpen(image.id)}
+            >
+              <span
+                className={classes.imageSrc}
+                style={{
+                  backgroundImage: `url(${image.file})`,
+                }}
+              />
+              <span className={classes.imageBackdrop} />
+              <span className={classes.imageButton}>
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="inherit"
+                  className={classes.imageTitle}
+                >
+                  {image.subtitle}
+                  <span className={classes.imageMarked} />
+                </Typography>
+              </span>
+            </ButtonBase>
+          ))}
+        </div>
+
+        <CardActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleGoBackButton}
+          >
+            VOLTAR
+          </Button>
+        </CardActions>
+      </GalleryCard>
+    </>
   );
 
   return (
