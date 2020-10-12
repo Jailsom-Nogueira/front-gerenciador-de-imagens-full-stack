@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import * as dayjs from 'dayjs';
 
 import axios from 'axios';
-import { baseUrl, axiosConfig } from '../../constants/axios';
+import { baseUrl } from '../../constants/axios';
 
 import Loader from '../Loading';
 
@@ -101,6 +101,13 @@ export default function CreateImage() {
       file: `${form.file}`,
       tags: `${tags}`,
       collection: `${form.collection}`,
+    };
+
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
     };
 
     axios
