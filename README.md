@@ -3,7 +3,7 @@
 # Fullstack - Gerenciador de imagens. (Front-end) 📺
 Projeto full stack de um gerenciador de imagens - repositório front-end
 
-## Vem testar: [SURGE](http://milky-effect.surge.sh/)
+## Front hospedado na S3 da AWS: [LINK](http://my-gallery-turing.s3-website-us-east-1.amazonaws.com/)
 
 ### Framework, linguagens e afins: 🛠
 - React (apenas componentes funcionais);
