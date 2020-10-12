@@ -5,7 +5,7 @@ import { GlobalContext } from '../GlobalContext';
 import dayjs from 'dayjs';
 
 import axios from 'axios';
-import { baseUrl, axiosConfig } from '../../constants/axios';
+import { baseUrl } from '../../constants/axios';
 
 import {
   makeStyles,
@@ -42,6 +42,13 @@ export default function ImageDetails(props) {
     }
     getImage();
   }, [history, token]);
+
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  };
 
   const getImage = async () => {
     if (token !== null) {
