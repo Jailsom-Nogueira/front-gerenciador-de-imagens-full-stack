@@ -211,5 +211,5 @@ export default function Login() {
     </>
   );
 
-  return <FormPageContainer> </FormPageContainer>;
+  return <FormPageContainer> {loadingState} </FormPageContainer>;
 }

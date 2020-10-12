@@ -63,11 +63,6 @@ export default function ImageDetails(props) {
     <Card className={classes.root}>
       <CardActionArea>
         <CardHeader
-          action={
-            <Grid item xs={8}>
-              <DeleteForeverOutlinedIcon onClick={props.handleDelete} />
-            </Grid>
-          }
           title={myImageDetails[0].author}
           subheader={dayjs(myImageDetails[0].date).format('dd-MM-YYYY')}
         />
@@ -85,9 +80,17 @@ export default function ImageDetails(props) {
           <Typography variant="body2" component="p">
             {myImageDetails[0].collection}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            #Tags: {myImageDetails[0].tags}
-          </Typography>
+
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                #Tags: {myImageDetails[0].tags}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <DeleteForeverOutlinedIcon onClick={props.handleDelete} />
+            </Grid>
+          </Grid>
         </CardContent>
       </CardActionArea>
     </Card>

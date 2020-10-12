@@ -262,5 +262,5 @@ export default function SignUp() {
     </>
   );
 
-  return <FormPageContainer>{loadingState};</FormPageContainer>;
+  return <FormPageContainer> {loadingState} </FormPageContainer>;
 }
