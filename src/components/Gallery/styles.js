@@ -17,6 +17,10 @@ export const GalleryCard = styled.div`
   box-shadow: 0 4px 16px 4px rgba(0, 0, 0, 0.3);
   background-color: #fff;
 
+  @media (max-width: 1048px) {
+    width: 80vw;
+  }
+
   @media (max-width: 800px) {
     width: 80vw;
   } ;
