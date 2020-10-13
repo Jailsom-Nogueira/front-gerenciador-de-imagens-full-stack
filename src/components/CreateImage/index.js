@@ -18,6 +18,7 @@ import {
   Avatar,
   Typography,
   FormControl,
+  CardMedia,
 } from '@material-ui/core';
 
 import { KeyboardDatePicker } from '@material-ui/pickers';
@@ -45,10 +46,14 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     marginBottom: theme.spacing(3),
   },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
 }));
 
 export default function CreateImage() {
-  const [today, setToday] = useState(new Date());
+  const [link, setLink] = useState();
   const [loading, setLoading] = useState(false);
 
   const classes = useStyles();
@@ -64,7 +69,6 @@ export default function CreateImage() {
   const [form, setForm] = useState({
     subtitle: '',
     author: '',
-    file: '',
     collection: '',
   });
   const handleChange = (prop) => (event) => {
@@ -91,6 +95,18 @@ export default function CreateImage() {
     createImage();
   };
 
+  const handleFile = async (event) => {
+    try {
+      const data = new FormData();
+      data.append('file', event.target.files[0]);
+
+      const res = await axios.put(`${baseUrl}files/upload`, data);
+      setLink(res.data.link);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const createImage = () => {
     setLoading(true);
 
@@ -98,7 +114,7 @@ export default function CreateImage() {
       subtitle: `${form.subtitle}`,
       author: `${form.author}`,
       date: `${selectedDate}`,
-      file: `${form.file}`,
+      file: `${link}`,
       tags: `${tags}`,
       collection: `${form.collection}`,
     };
@@ -116,8 +132,9 @@ export default function CreateImage() {
         setLoading(false);
         alert(response.data.message);
         setTags('');
-        setForm({ subtitle: '', author: '', file: '', collection: '' });
+        setForm({ subtitle: '', author: '', collection: '' });
         setSelectedDate(new Date());
+        setLink();
       })
       .catch((err) => {
         setLoading(false);
@@ -150,6 +167,19 @@ export default function CreateImage() {
           className={classes.root}
           autoComplete="off"
         >
+          {link && (
+            <CardMedia
+              className={classes.media}
+              image={link}
+              title={form.subtitle}
+            />
+            // <div>
+            //   <img src={link} alt={'Imagem'} />
+            // </div>
+          )}
+
+          <input type={'file'} onChange={handleFile} />
+
           <TextField
             id="subtitle"
             required
@@ -169,16 +199,6 @@ export default function CreateImage() {
             type="text"
             value={form.author}
             onChange={handleChange('author')}
-          />
-
-          <TextField
-            id="file"
-            required
-            label="Link"
-            variant="outlined"
-            type="url"
-            value={form.file}
-            onChange={handleChange('file')}
           />
 
           <TextField
