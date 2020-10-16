@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateImage() {
   const [link, setLink] = useState();
   const [loading, setLoading] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const classes = useStyles();
   const history = useHistory();
@@ -84,7 +85,6 @@ export default function CreateImage() {
     setTags(onlyOneComma);
   };
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const handleDateChange = (date) => {
     const inputDate = dayjs(date).format('YYYY-MM-DD');
     setSelectedDate(inputDate);
@@ -161,6 +161,7 @@ export default function CreateImage() {
       >
         CRIAR IMAGEM
       </Typography>
+
       <FormPageCard>
         <FormControl
           component="fieldset"
@@ -173,9 +174,6 @@ export default function CreateImage() {
               image={link}
               title={form.subtitle}
             />
-            // <div>
-            //   <img src={link} alt={'Imagem'} />
-            // </div>
           )}
 
           <input type={'file'} onChange={handleFile} />
@@ -254,7 +252,7 @@ export default function CreateImage() {
               color="primary"
               onClick={handleToGalleryButton}
             >
-              MINHAS IMAGENS
+              GALERIA
             </Button>
           </ButtonContainer>
         </FormControl>

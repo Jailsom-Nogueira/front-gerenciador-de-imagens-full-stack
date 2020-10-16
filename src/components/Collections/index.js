@@ -7,9 +7,7 @@ import { baseUrl } from '../../constants/axios';
 
 import { GalleryContainer, GalleryCard } from './styles';
 
-import ImageDetails from '../ImageDetails';
 import Loader from '../Loading';
-import FormCollection from '../FormCollection';
 
 import {
   makeStyles,
@@ -17,12 +15,10 @@ import {
   Typography,
   Button,
   CardActions,
-  Modal,
   Avatar,
-  Dialog,
 } from '@material-ui/core';
 
-import PermMediaIcon from '@material-ui/icons/PermMedia';
+import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,12 +115,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateImage() {
+export default function Collections() {
   const allContext = useContext(GlobalContext);
 
-  const [open, setOpen] = useState(false);
-  const [openFormCollection, setOpenFormCollection] = useState(false);
-  const [myGallery, setGallery] = useState([]);
+  const [myCollections, setMyCollections] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const classes = useStyles();
@@ -136,7 +130,8 @@ export default function CreateImage() {
     if (token === null) {
       history.push('/');
     }
-    getImages();
+
+    getCollections();
   }, [history, token]);
 
   const axiosConfig = {
@@ -146,14 +141,15 @@ export default function CreateImage() {
     },
   };
 
-  const getImages = async () => {
+  const getCollections = async () => {
     if (token !== null) {
       try {
         const response = await axios.get(
-          `${baseUrl}image/getImage`,
+          `${baseUrl}collection/getAllCollections`,
           axiosConfig,
         );
-        setGallery(response.data);
+
+        setMyCollections(response.data);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -165,81 +161,49 @@ export default function CreateImage() {
     }
   };
 
-  const handleDelete = () => {
-    let r = window.confirm('Tem certeza de que deseja apagar a imagem?');
-
-    if (r === true) {
-      axios
-        .delete(
-          `${baseUrl}image/deleteImage?id=${allContext.imageDetailsId}`,
-          axiosConfig,
-        )
-        .then(() => {
-          allContext.setImageDetailsId('');
-          setOpen(false);
-          window.location.reload(true);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    }
-  };
-  const handleClickOpen = () => {
-    setOpenFormCollection(true);
-  };
-
-  const handleClickClose = () => {
-    setOpenFormCollection(false);
-  };
-
   const handleGoBackButton = (event) => {
     event.preventDefault();
     history.goBack();
   };
 
-  const handleOpen = (imageId) => {
-    allContext.setImageDetailsId(imageId);
-    setOpen(true);
+  const goToCollection = (collectionId, collectionTitle) => {
+    setLoading(false);
+    history.push(`/ColletionDetails${collectionId}`);
+    allContext.setCollectionTittle(collectionTitle);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const modalBody = <ImageDetails handleDelete={handleDelete} />;
 
   const loadingState = loading ? (
     <Loader />
   ) : (
     <>
       <Avatar className={classes.avatarStyle}>
-        <PermMediaIcon />
+        <CollectionsBookmarkIcon />
       </Avatar>
       <Typography
         className={classes.typographyStyle}
         component="h3"
         variant="h5"
       >
-        GALERIA
+        MINHAS COLEÇÕES
       </Typography>
 
       <GalleryCard>
         <div className={classes.root}>
-          {myGallery.map((image) => (
+          {myCollections.map((collection) => (
             <ButtonBase
               focusRipple
-              key={image.id}
+              key={collection.id}
               className={classes.image}
               focusVisibleClassName={classes.focusVisible}
               style={{
                 width: '33%',
               }}
-              onClick={() => handleOpen(image.id)}
+              onClick={() => goToCollection(collection.id, collection.title)}
             >
               <span
                 className={classes.imageSrc}
                 style={{
-                  backgroundImage: `url(${image.file})`,
+                  backgroundImage: `url(${collection.file})`,
                 }}
               />
               <span className={classes.imageBackdrop} />
@@ -250,7 +214,7 @@ export default function CreateImage() {
                   color="inherit"
                   className={classes.imageTitle}
                 >
-                  {image.subtitle}
+                  {collection.title}
                   <span className={classes.imageMarked} />
                 </Typography>
               </span>
@@ -266,41 +230,10 @@ export default function CreateImage() {
           >
             VOLTAR
           </Button>
-          <Button
-            className={classes.buttonStyle}
-            variant="contained"
-            color="primary"
-            onClick={handleClickOpen}
-          >
-            CRIAR COLEÇÃO
-          </Button>
         </CardActions>
       </GalleryCard>
     </>
   );
 
-  return (
-    <GalleryContainer>
-      {loadingState}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="detalhes-da-imagem"
-        aria-describedby="quando-selecionado-abre-detalhes-da-imagem"
-        className={classes.modal}
-      >
-        {modalBody}
-      </Modal>
-
-      <div>
-        <Dialog
-          open={openFormCollection}
-          onClose={handleClickClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <FormCollection handleClickClose={handleClickClose} />
-        </Dialog>
-      </div>
-    </GalleryContainer>
-  );
+  return <GalleryContainer>{loadingState}</GalleryContainer>;
 }

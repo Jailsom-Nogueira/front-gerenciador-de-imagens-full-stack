@@ -16,9 +16,11 @@ import {
   Typography,
   CardHeader,
   Grid,
+  IconButton,
 } from '@material-ui/core';
 
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 const useStyles = makeStyles({
   root: {
@@ -66,6 +68,26 @@ export default function ImageDetails(props) {
     }
   };
 
+  const location = window.location.href.includes('Gallery') ? (
+    <IconButton
+      aria-label="delete"
+      className={classes.margin}
+      size="small"
+      onClick={props.handleDelete}
+    >
+      <DeleteForeverOutlinedIcon />
+    </IconButton>
+  ) : (
+    <IconButton
+      aria-label="delete"
+      className={classes.margin}
+      size="small"
+      onClick={props.handleDeleteFromCollection}
+    >
+      <RemoveCircleOutlineIcon />
+    </IconButton>
+  );
+
   const gotImage = myImageDetails.length && (
     <Card className={classes.root}>
       <CardActionArea>
@@ -89,13 +111,13 @@ export default function ImageDetails(props) {
           </Typography>
 
           <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               <Typography variant="body2" color="textSecondary" component="p">
                 #Tags: {myImageDetails[0].tags}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <DeleteForeverOutlinedIcon onClick={props.handleDelete} />
+            <Grid item xs={2}>
+              {location}
             </Grid>
           </Grid>
         </CardContent>
