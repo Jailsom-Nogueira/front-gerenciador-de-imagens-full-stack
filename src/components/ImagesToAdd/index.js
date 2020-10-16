@@ -7,20 +7,7 @@ import { baseUrl } from '../../constants/axios';
 
 import { GalleryContainer, GalleryCard } from './styles';
 
-import ImageDetails from '../ImageDetails';
-import Loader from '../Loading';
-import FormCollection from '../FormCollection';
-
-import {
-  makeStyles,
-  ButtonBase,
-  Typography,
-  Button,
-  CardActions,
-  Modal,
-  Avatar,
-  Dialog,
-} from '@material-ui/core';
+import { makeStyles, ButtonBase, Typography, Avatar } from '@material-ui/core';
 
 import PermMediaIcon from '@material-ui/icons/PermMedia';
 
@@ -98,11 +85,6 @@ const useStyles = makeStyles((theme) => ({
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
   },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   avatarStyle: {
     color: '#fff',
     backgroundColor: '#ff6d00',
@@ -119,13 +101,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateImage() {
+export default function ImagesToAdd(props) {
   const allContext = useContext(GlobalContext);
 
-  const [open, setOpen] = useState(false);
-  const [openFormCollection, setOpenFormCollection] = useState(false);
   const [myGallery, setGallery] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const classes = useStyles();
   const history = useHistory();
@@ -154,9 +133,7 @@ export default function CreateImage() {
           axiosConfig,
         );
         setGallery(response.data);
-        setLoading(false);
       } catch (err) {
-        setLoading(false);
         alert('Erro ao estabelecer conexão com o banco de dados', err.message);
         history.goBack();
       }
@@ -165,52 +142,12 @@ export default function CreateImage() {
     }
   };
 
-  const handleDelete = () => {
-    let r = window.confirm('Tem certeza de que deseja apagar a imagem?');
+  const filterResult = myGallery.filter(
+    ({ id: id1 }) =>
+      !allContext.myCollections.some(({ id: id2 }) => id2 === id1),
+  );
 
-    if (r === true) {
-      axios
-        .delete(
-          `${baseUrl}image/deleteImage?id=${allContext.imageDetailsId}`,
-          axiosConfig,
-        )
-        .then(() => {
-          allContext.setImageDetailsId('');
-          setOpen(false);
-          window.location.reload(true);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    }
-  };
-  const handleClickOpen = () => {
-    setOpenFormCollection(true);
-  };
-
-  const handleClickClose = () => {
-    setOpenFormCollection(false);
-  };
-
-  const handleGoBackButton = (event) => {
-    event.preventDefault();
-    history.goBack();
-  };
-
-  const handleOpen = (imageId) => {
-    allContext.setImageDetailsId(imageId);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const modalBody = <ImageDetails handleDelete={handleDelete} />;
-
-  const loadingState = loading ? (
-    <Loader />
-  ) : (
+  const gotImagesToShow = filterResult.length ? (
     <>
       <Avatar className={classes.avatarStyle}>
         <PermMediaIcon />
@@ -220,12 +157,12 @@ export default function CreateImage() {
         component="h3"
         variant="h5"
       >
-        GALERIA
+        SELECIONE ABAIXO AS IMAGENS QUE DESEJA ADICIONAR
       </Typography>
 
       <GalleryCard>
         <div className={classes.root}>
-          {myGallery.map((image) => (
+          {filterResult.map((image) => (
             <ButtonBase
               focusRipple
               key={image.id}
@@ -234,7 +171,7 @@ export default function CreateImage() {
               style={{
                 width: '33%',
               }}
-              onClick={() => handleOpen(image.id)}
+              onClick={() => props.handleAddImage(image.id)}
             >
               <span
                 className={classes.imageSrc}
@@ -257,50 +194,19 @@ export default function CreateImage() {
             </ButtonBase>
           ))}
         </div>
-
-        <CardActions>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={handleGoBackButton}
-          >
-            VOLTAR
-          </Button>
-          <Button
-            className={classes.buttonStyle}
-            variant="contained"
-            color="primary"
-            onClick={handleClickOpen}
-          >
-            CRIAR COLEÇÃO
-          </Button>
-        </CardActions>
       </GalleryCard>
+    </>
+  ) : (
+    <>
+      <Typography
+        className={classes.typographyStyle}
+        component="h3"
+        variant="h5"
+      >
+        VOCÊ JÁ ADICIONOU TODAS AS IMAGENS
+      </Typography>
     </>
   );
 
-  return (
-    <GalleryContainer>
-      {loadingState}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="detalhes-da-imagem"
-        aria-describedby="quando-selecionado-abre-detalhes-da-imagem"
-        className={classes.modal}
-      >
-        {modalBody}
-      </Modal>
-
-      <div>
-        <Dialog
-          open={openFormCollection}
-          onClose={handleClickClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <FormCollection handleClickClose={handleClickClose} />
-        </Dialog>
-      </div>
-    </GalleryContainer>
-  );
+  return <GalleryContainer>{gotImagesToShow}</GalleryContainer>;
 }

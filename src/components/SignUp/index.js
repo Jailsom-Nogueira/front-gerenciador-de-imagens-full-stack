@@ -188,7 +188,9 @@ export default function SignUp() {
             className={clsx(classes.margin, classes.textField)}
             variant="outlined"
           >
-            <InputLabel htmlFor="password">Senha</InputLabel>
+            <InputLabel htmlFor="password" required>
+              Senha
+            </InputLabel>
             <OutlinedInput
               id="password"
               type={form.showPassword ? 'text' : 'password'}
@@ -206,7 +208,7 @@ export default function SignUp() {
                   </IconButton>
                 </InputAdornment>
               }
-              labelWidth={70}
+              labelWidth={60}
             />
           </FormControl>
 
@@ -214,7 +216,9 @@ export default function SignUp() {
             className={clsx(classes.margin, classes.textField)}
             variant="outlined"
           >
-            <InputLabel htmlFor="confirmPassword">Senha</InputLabel>
+            <InputLabel htmlFor="confirmPassword" required>
+              Confirmar senha
+            </InputLabel>
             <OutlinedInput
               id="confirmPassword"
               type={form.showConfirmPassword ? 'text' : 'password'}
@@ -236,7 +240,7 @@ export default function SignUp() {
                   </IconButton>
                 </InputAdornment>
               }
-              labelWidth={70}
+              labelWidth={130}
             />
           </FormControl>
 

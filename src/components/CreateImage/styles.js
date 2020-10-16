@@ -16,6 +16,7 @@ export const FormPageCard = styled.div`
   border-radius: 4px;
   box-shadow: 0 4px 16px 4px rgba(0, 0, 0, 0.3);
   background-color: #fff;
+
   overflow: scroll auto;
   overflow-x: hidden;
 
