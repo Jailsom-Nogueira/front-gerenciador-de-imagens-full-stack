@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  buttonuUploadStyle: {
+    color: '#fff',
+    width: '100%',
+  },
 }));
 
 export default function FormCollection(props) {
@@ -126,16 +130,15 @@ export default function FormCollection(props) {
         />
         <label htmlFor="contained-button-file">
           <Button
+            className={classes.buttonuUploadStyle}
             variant="contained"
             color="primary"
             component="span"
             startIcon={<CloudUploadIcon />}
           >
-            Minha imagem
+            BUSCAR CAPA
           </Button>
         </label>
-
-        {/* <input type={'file'} onChange={handleFile} /> */}
 
         <TextField
           id="title"
