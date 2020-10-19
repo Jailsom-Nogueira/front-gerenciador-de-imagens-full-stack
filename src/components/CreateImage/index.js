@@ -24,6 +24,7 @@ import {
 import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  input: {
+    display: 'none',
   },
 }));
 
@@ -174,7 +178,24 @@ export default function CreateImage() {
             />
           )}
 
-          <input type={'file'} onChange={handleFile} />
+          <input
+            accept="image/*"
+            className={classes.input}
+            id="contained-button-file"
+            multiple
+            type="file"
+            onChange={handleFile}
+          />
+          <label htmlFor="contained-button-file">
+            <Button
+              variant="contained"
+              color="primary"
+              component="span"
+              startIcon={<CloudUploadIcon />}
+            >
+              Minha imagem
+            </Button>
+          </label>
 
           <TextField
             id="subtitle"
