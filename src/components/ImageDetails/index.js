@@ -106,9 +106,6 @@ export default function ImageDetails(props) {
           <Typography gutterBottom variant="h5" component="h2">
             {myImageDetails[0].subtitle}
           </Typography>
-          <Typography variant="body2" component="p">
-            {myImageDetails[0].collection}
-          </Typography>
 
           <Grid container spacing={3}>
             <Grid item xs={10}>

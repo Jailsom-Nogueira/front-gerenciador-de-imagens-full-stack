@@ -114,10 +114,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     marginBottom: theme.spacing(3),
   },
-  buttonStyle: {
-    marginRight: theme.spacing(1),
-    color: '#fff',
-  },
 }));
 
 export default function CollectionDetails() {

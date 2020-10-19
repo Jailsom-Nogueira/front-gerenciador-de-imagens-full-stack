@@ -70,7 +70,6 @@ export default function CreateImage() {
   const [form, setForm] = useState({
     subtitle: '',
     author: '',
-    collection: '',
   });
   const handleChange = (prop) => (event) => {
     setForm({ ...form, [prop]: event.target.value });
@@ -116,7 +115,6 @@ export default function CreateImage() {
       date: `${selectedDate}`,
       file: `${link}`,
       tags: `${tags}`,
-      collection: `${form.collection}`,
     };
 
     const axiosConfig = {
@@ -132,7 +130,7 @@ export default function CreateImage() {
         setLoading(false);
         alert(response.data.message);
         setTags('');
-        setForm({ subtitle: '', author: '', collection: '' });
+        setForm({ subtitle: '', author: '' });
         setSelectedDate(new Date());
         setLink();
       })
@@ -207,16 +205,6 @@ export default function CreateImage() {
             type="text"
             value={tags}
             onChange={handleTagsChange}
-          />
-
-          <TextField
-            id="collection"
-            required
-            label="Coleção"
-            variant="outlined"
-            type="text"
-            value={form.collection}
-            onChange={handleChange('collection')}
           />
 
           <KeyboardDatePicker
