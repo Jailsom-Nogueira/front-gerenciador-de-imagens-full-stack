@@ -7,6 +7,9 @@ import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    '& > *': {
+      color: '#fff',
+    },
     flexGrow: 1,
   },
   title: {
@@ -47,7 +50,7 @@ export default function Header() {
             My Gallery
           </Typography>
           <Button color="inherit" onClick={goToCreateImage}>
-            Criar imagem
+            Nova imagem
           </Button>
           <Button color="inherit" onClick={goToGallery}>
             Galeria

@@ -4,7 +4,7 @@ export const GalleryContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #1b1d20;
 `;
 export const GalleryCard = styled.div`

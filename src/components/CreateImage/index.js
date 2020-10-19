@@ -161,7 +161,7 @@ export default function CreateImage() {
         component="h3"
         variant="h5"
       >
-        CRIAR IMAGEM
+        NOVA IMAGEM
       </Typography>
 
       <FormPageCard>
@@ -188,12 +188,13 @@ export default function CreateImage() {
           />
           <label htmlFor="contained-button-file">
             <Button
+              className={clsx(classes.buttonStyle)}
               variant="contained"
               color="primary"
               component="span"
               startIcon={<CloudUploadIcon />}
             >
-              Minha imagem
+              Buscar
             </Button>
           </label>
 

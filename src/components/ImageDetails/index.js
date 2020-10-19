@@ -98,7 +98,7 @@ export default function ImageDetails(props) {
         <CardMedia
           component="img"
           alt={myImageDetails[0].subtitle}
-          height="240"
+          height="350"
           image={myImageDetails[0].file}
           title={myImageDetails[0].subtitle}
         />

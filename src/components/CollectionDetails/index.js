@@ -170,7 +170,7 @@ export default function CollectionDetails() {
       imageId: `${imageId}`,
       date: `${dayjs().format('YYYY-MM-DD')}`,
     };
-    console.log(`${baseUrl}collectionsImages/addImage`, body, axiosConfig);
+
     axios
       .post(`${baseUrl}collectionsImages/addImage`, body, axiosConfig)
       .then((response) => {
