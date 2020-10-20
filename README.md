@@ -1,6 +1,9 @@
 # Fullstack - Gerenciador de imagens. (Front-end) 📺
 Projeto full stack de um gerenciador de imagens (Desktop first) - repositório front-end
 
+### Para testar você pode criar sua própria conta em [SignUp](http://my-gallery-turing.s3-website-us-east-1.amazonaws.com/SignUp
+) 
+
 ### Objetivos do projeto:
 - demonstrar conhecimentos na implementação de uma aplicação Fullstack ponta a ponta, do zero e de forma autônoma.
 
