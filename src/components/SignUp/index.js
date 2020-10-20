@@ -4,13 +4,12 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { baseUrl } from '../../constants/axios';
 
-import { FormPageContainer, FormPageCard } from './styles';
+import { useStyles, FormPageContainer, FormPageCard } from './styles';
 
 import Loader from '../Loading';
 
 import clsx from 'clsx';
 import {
-  makeStyles,
   Button,
   IconButton,
   OutlinedInput,
@@ -26,38 +25,6 @@ import {
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-  textField: {
-    marginTop: theme.spacing(1),
-  },
-  buttonStyle: {
-    marginRight: theme.spacing(1),
-    color: '#fff',
-  },
-  avatarStyle: {
-    color: '#fff',
-    backgroundColor: '#ff6d00',
-    marginBottom: theme.spacing(1),
-  },
-  typographyStyle: {
-    color: '#fff',
-    marginBottom: theme.spacing(3),
-  },
-}));
 
 export default function SignUp() {
   const classes = useStyles();

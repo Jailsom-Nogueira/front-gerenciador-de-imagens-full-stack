@@ -8,11 +8,15 @@ import { baseUrl } from '../../constants/axios';
 
 import Loader from '../Loading';
 
-import { FormPageContainer, FormPageCard, ButtonContainer } from './styles';
+import {
+  useStyles,
+  FormPageContainer,
+  FormPageCard,
+  ButtonContainer,
+} from './styles';
 
 import clsx from 'clsx';
 import {
-  makeStyles,
   Button,
   TextField,
   Avatar,
@@ -25,36 +29,6 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-  },
-  buttonStyle: {
-    marginRight: theme.spacing(1),
-    color: '#fff',
-  },
-  avatarStyle: {
-    color: '#fff',
-    backgroundColor: '#ff6d00',
-    marginBottom: theme.spacing(1),
-  },
-  typographyStyle: {
-    color: '#fff',
-    marginBottom: theme.spacing(3),
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  input: {
-    display: 'none',
-  },
-}));
 
 export default function CreateImage() {
   const [link, setLink] = useState();
