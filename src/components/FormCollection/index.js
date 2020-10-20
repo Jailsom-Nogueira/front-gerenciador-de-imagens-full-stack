@@ -18,30 +18,7 @@ import {
 
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-  },
-  buttonStyle: {
-    marginRight: theme.spacing(1),
-    color: '#fff',
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  input: {
-    display: 'none',
-  },
-  buttonuUploadStyle: {
-    color: '#fff',
-    width: '100%',
-  },
-}));
+import { useStyles } from './styles';
 
 export default function FormCollection(props) {
   const classes = useStyles();

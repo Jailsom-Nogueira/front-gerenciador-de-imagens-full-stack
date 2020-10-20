@@ -1,21 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
-
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      color: '#fff',
-    },
-    flexGrow: 1,
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import { useStyles } from './styles';
 
 export default function Header() {
   const classes = useStyles();
