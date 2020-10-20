@@ -11,14 +11,17 @@ Nesta aplicação o usuário poderá:
 - Apagar uma imagem da galeria;
 - Criar coleções;
 - Adicionar imagens da galeria para as coleções;
-- Remover imagens de uma determinada coleção;
+- Remover imagens de uma determinada coleção.
 
 O que poderia melhorar:
 - Validação dos campos de input;
 - Mensagens de retorno do banco;
 - Implementação de filtros para a galeria e para as coleções;
+- Testes.
 
 ## Front hospedado na S3 da AWS: [LINK](http://my-gallery-turing.s3-website-us-east-1.amazonaws.com/)
+### - API REST hospedada na Heroku
+### - Banco hospedado na EC2 AWS 
 
 ### Framework, linguagens e afins: 🛠
 - React (apenas componentes funcionais);
