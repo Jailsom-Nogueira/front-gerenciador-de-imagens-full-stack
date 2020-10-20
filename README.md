@@ -1,6 +1,7 @@
 # Fullstack - Gerenciador de imagens. (Front-end) 📺
 Projeto full stack de um gerenciador de imagens (Desktop first) - repositório front-end
 
+
 Objetivos do projeto:
 Demonstrar conhecimentos na implementação de uma aplicação Fullstack ponta a ponta, do zero e de forma autônoma.
 
