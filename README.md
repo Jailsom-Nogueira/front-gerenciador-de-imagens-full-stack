@@ -1,7 +1,22 @@
-# (EM ANDAMENTO)🚨🚧
-
 # Fullstack - Gerenciador de imagens. (Front-end) 📺
-Projeto full stack de um gerenciador de imagens - repositório front-end
+Projeto full stack de um gerenciador de imagens (Desktop first) - repositório front-end
+
+Objetivos do projeto:
+Demonstrar conhecimentos na implementação de uma aplicação Fullstack ponta a ponta, do zero e de forma autônoma.
+
+Nesta aplicação o usuário poderá:
+- Criar uma conta;
+- Fazer login para acesso ao app;
+- Subir uma imagem para a sua galeria;
+- Apagar uma imagem da galeria;
+- Criar coleções;
+- Adicionar imagens da galeria para as coleções;
+- Remover imagens de uma determinada coleção;
+
+O que poderia melhorar:
+- Validação dos campos de input;
+- Mensagens de retorno do banco;
+- Implementação de filtros para a galeria e para as coleções;
 
 ## Front hospedado na S3 da AWS: [LINK](http://my-gallery-turing.s3-website-us-east-1.amazonaws.com/)
 
@@ -27,9 +42,6 @@ Projeto full stack de um gerenciador de imagens - repositório front-end
 - Componentização;
 - Clean code;
 - Programação orientada a eventos;
-
-Objetivos do projeto:
-Demonstrar conhecimentos na implementação de uma aplicação Fullstack ponta a ponta, do zero e de forma autônoma.
 
 ©Código livre para uso pessoal. 🎁
 Para instalar basta copiar o link do repositório, fazer um clone local e instalar as dependências. 
